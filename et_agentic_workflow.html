@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ET Enterprise Intelligence — Agentic Workflow Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --et-orange: #E8520A;
+  --et-orange2: #FF6B2B;
+  --et-dark: #1A0F00;
+  --et-brown: #2D1A00;
+  --bg: #FDF8F2;
+  --bg2: #F5EDE0;
+  --bg3: #EDE0CC;
+  --cream: #FAF4EC;
+  --paper: #FFFCF8;
+  --ink: #1A0F00;
+  --ink2: #3D2B0F;
+  --ink3: #7A5C35;
+  --ink4: #B8956A;
+  --rule: #D4B896;
+  --rule2: #E8D4B8;
+  --teal: #006B5E;
+  --teal2: #009B85;
+  --red: #C0392B;
+  --red2: #E74C3C;
+  --green: #1D6A3A;
+  --green2: #27AE60;
+  --amber: #B7770D;
+  --amber2: #E09620;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --serif: 'Source Serif 4', serif;
+  --display: 'Playfair Display', serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 13px; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--paper);
+  border-bottom: 3px solid var(--et-orange);
+  padding: 0;
+}
+.masthead-top {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--rule);
+}
+.masthead-brand {
+  padding: 10px 20px;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.et-logo {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--et-orange);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.et-logo span { color: var(--ink); }
+.masthead-tagline {
+  font-family: var(--serif);
+  font-size: 9px;
+  color: var(--ink3);
+  font-style: italic;
+  line-height: 1.3;
+  border-left: 1px solid var(--rule);
+  padding-left: 10px;
+  margin-left: 4px;
+}
+.masthead-ticker {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: var(--bg2);
+}
+.ticker-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--et-orange);
+  font-weight: 500;
+  white-space: nowrap;
+  margin-right: 12px;
+  letter-spacing: 1px;
+}
+.ticker-track {
+  overflow: hidden;
+  flex: 1;
+  height: 20px;
+  position: relative;
+}
+.ticker-inner {
+  display: flex;
+  gap: 32px;
+  animation: ticker 28s linear infinite;
+  white-space: nowrap;
+  position: absolute;
+  top: 0; left: 0;
+}
+@keyframes ticker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.ticker-item {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ticker-item .up { color: var(--green2); }
+.ticker-item .dn { color: var(--red2); }
+
+.masthead-date {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  border-left: 1px solid var(--rule);
+  min-width: 140px;
+}
+.date-text { font-family: var(--serif); font-size: 11px; color: var(--ink3); }
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--et-orange);
+  font-weight: 500;
+}
+.live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--et-orange); animation: blink 1s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+/* ── NAV BAR ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 20px;
+  background: var(--paper);
+}
+.nav-link {
+  padding: 8px 14px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link.active { color: var(--et-orange); border-bottom-color: var(--et-orange); }
+.nav-alert {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  font-family: var(--mono);
+  font-size: 8px;
+  margin-left: 4px;
+  vertical-align: top;
+}
+
+/* ── MAIN GRID ── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── CONTENT AREA ── */
+.content-area {
+  border-right: 1px solid var(--rule);
+}
+
+/* ── SECTION HEADER ── */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px 10px;
+  border-bottom: 1px solid var(--rule2);
+  background: var(--paper);
+}
+.section-title {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.section-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--rule2);
+}
+.section-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink4);
+  letter-spacing: 0.5px;
+}
+
+/* ── METRICS STRIP ── */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 2px solid var(--rule);
+  background: var(--paper);
+}
+.metric-cell {
+  padding: 14px 18px;
+  border-right: 1px solid var(--rule2);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.metric-cell:hover { background: var(--bg2); }
+.metric-cell:last-child { border-right: none; }
+.metric-cell::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.metric-cell.orange::before { background: var(--et-orange); }
+.metric-cell.teal::before { background: var(--teal); }
+.metric-cell.green::before { background: var(--green); }
+.metric-cell.amber::before { background: var(--amber); }
+.m-label { font-family: var(--mono); font-size: 9px; color: var(--ink4); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.m-value { font-family: var(--display); font-size: 28px; font-weight: 800; color: var(--ink); line-height: 1; margin-bottom: 3px; }
+.m-sub { font-family: var(--serif); font-size: 11px; color: var(--ink3); font-style: italic; }
+.m-delta {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: var(--mono); font-size: 9px;
+  padding: 1px 5px; border-radius: 3px;
+}
+.m-delta.up { background: rgba(39,174,96,0.1); color: var(--green); }
+.m-delta.dn { background: rgba(192,57,43,0.1); color: var(--red); }
+
+/* ── PROCESS SELECTOR ── */
+.process-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 8px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+.process-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink4);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.proc-btn {
+  padding: 5px 12px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.proc-btn:hover { border-color: var(--et-orange); color: var(--et-orange); }
+.proc-btn.active { background: var(--et-orange); border-color: var(--et-orange); color: white; }
+.proc-btn .proc-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  padding: 0 4px;
+  font-size: 9px;
+  margin-left: 4px;
+}
+.proc-btn:not(.active) .proc-badge { background: var(--rule2); color: var(--ink3); }
+
+/* ── AGENT PIPELINE ── */
+.pipeline-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+.pipeline-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.pipeline-title {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.pipeline-meta {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink4);
+}
+.pipeline-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.confidence-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink3);
+}
+.conf-track { width: 80px; height: 4px; background: var(--rule2); border-radius: 2px; overflow: hidden; }
+.conf-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width 0.5s; }
+
+/* AGENT NODES */
+.agent-pipeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.a-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.a-node:hover { transform: translateY(-1px); }
+.a-box {
+  width: 58px; height: 58px;
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  position: relative;
+  transition: all 0.25s;
+}
+.a-box.active-node {
+  border-color: var(--et-orange);
+  background: rgba(232,82,10,0.04);
+  box-shadow: 0 0 0 3px rgba(232,82,10,0.12);
+}
+.a-box.done-node {
+  border-color: var(--teal);
+  background: rgba(0,107,94,0.04);
+}
+.a-box.idle-node {
+  border-color: var(--rule2);
+  background: var(--bg2);
+  opacity: 0.6;
+}
+.a-box.error-node {
+  border-color: var(--red);
+  background: rgba(192,57,43,0.04);
+}
+.a-spinner {
+  position: absolute;
+  inset: -4px;
+  border-radius: 6px;
+  border: 1.5px solid transparent;
+  border-top-color: var(--et-orange);
+  animation: spin 1.2s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg) } }
+.a-label { font-family: var(--sans); font-size: 10px; font-weight: 500; color: var(--ink2); margin-top: 6px; text-align: center; }
+.a-sublabel { font-family: var(--mono); font-size: 9px; color: var(--ink4); text-align: center; line-height: 1.2; }
+.a-status-tag {
+  font-family: var(--mono); font-size: 8px; text-align: center;
+  margin-top: 3px; padding: 1px 5px; border-radius: 2px;
+}
+.a-conn {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 16px;
+  padding-top: 29px;
+  position: relative;
+}
+.a-conn-line {
+  flex: 1;
+  height: 1.5px;
+  background: var(--rule);
+  position: relative;
+}
+.a-conn-line.done-conn { background: var(--teal); }
+.a-conn-line.active-conn { background: var(--et-orange); }
+.a-conn-arrow {
+  width: 0; height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 5px solid var(--rule);
+  flex-shrink: 0;
+}
+.a-conn-arrow.done-arr { border-left-color: var(--teal); }
+.a-conn-arrow.active-arr { border-left-color: var(--et-orange); }
+.packet {
+  position: absolute;
+  top: -3px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--et-orange);
+  animation: pkt 2.2s ease-in-out infinite;
+}
+@keyframes pkt { 0%{left:0;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{left:100%;opacity:0} }
+
+/* ── DECISION PANEL ── */
+.decision-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 2px solid var(--rule);
+}
+.decision-cell {
+  padding: 14px 18px;
+  border-right: 1px solid var(--rule2);
+}
+.decision-cell:last-child { border-right: none; }
+.dc-head { font-family: var(--display); font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.dc-indicator {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+
+/* ── TABS ── */
+.tabs-bar {
+  display: flex;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  overflow-x: auto;
+}
+.tab-b {
+  padding: 9px 16px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink4);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.tab-b:hover { color: var(--ink2); }
+.tab-b.on { color: var(--et-orange); border-bottom-color: var(--et-orange); }
+.tab-content { display: none; }
+.tab-content.on { display: block; }
+
+/* ── TABLE ── */
+.et-table { width: 100%; border-collapse: collapse; }
+.et-table th {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ink4);
+  padding: 8px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg2);
+  font-weight: 500;
+}
+.et-table td {
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--rule2);
+  font-family: var(--serif);
+  font-size: 12px;
+  color: var(--ink2);
+  vertical-align: middle;
+}
+.et-table tr:hover td { background: var(--bg2); }
+.et-table tr:last-child td { border-bottom: none; }
+.et-table .task-n { font-weight: 600; color: var(--ink); font-family: var(--sans); }
+
+/* BADGES */
+.badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 7px; border-radius: 2px;
+  font-family: var(--mono); font-size: 9px; font-weight: 500;
+}
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; }
+.badge.running { background: rgba(232,82,10,0.1); color: var(--et-orange); }
+.badge.running .badge-dot { background: var(--et-orange); animation: blink 1s infinite; }
+.badge.done { background: rgba(0,107,94,0.1); color: var(--teal); }
+.badge.done .badge-dot { background: var(--teal); }
+.badge.stall { background: rgba(183,119,13,0.1); color: var(--amber); }
+.badge.stall .badge-dot { background: var(--amber); animation: blink 0.8s infinite; }
+.badge.err { background: rgba(192,57,43,0.08); color: var(--red); }
+.badge.err .badge-dot { background: var(--red); animation: blink 0.5s infinite; }
+.badge.queue { background: var(--bg3); color: var(--ink4); }
+.badge.queue .badge-dot { background: var(--ink4); }
+
+/* PROGRESS */
+.prog-wrap { height: 3px; background: var(--rule2); border-radius: 1px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 1px; transition: width 0.5s; }
+
+/* ── AUDIT LOG ── */
+.audit-scroll { max-height: 240px; overflow-y: auto; }
+.log-row {
+  display: flex;
+  gap: 10px;
+  padding: 8px 18px;
+  border-bottom: 1px solid var(--rule2);
+  align-items: flex-start;
+  font-size: 11px;
+  transition: background 0.1s;
+  cursor: pointer;
+}
+.log-row:hover { background: var(--bg2); }
+.log-time { font-family: var(--mono); font-size: 9px; color: var(--ink4); white-space: nowrap; padding-top: 2px; min-width: 56px; }
+.log-type {
+  font-family: var(--mono); font-size: 8px;
+  padding: 2px 5px; border-radius: 2px;
+  white-space: nowrap; flex-shrink: 0; height: fit-content;
+  font-weight: 500;
+}
+.log-type.DECISION { background: rgba(0,107,94,0.1); color: var(--teal); }
+.log-type.ACTION { background: rgba(232,82,10,0.08); color: var(--et-orange); }
+.log-type.RECOVERY { background: rgba(183,119,13,0.1); color: var(--amber); }
+.log-type.ERROR { background: rgba(192,57,43,0.08); color: var(--red); }
+.log-type.ESCALATION { background: rgba(29,106,58,0.08); color: var(--green); }
+.log-msg { font-family: var(--serif); color: var(--ink2); line-height: 1.4; flex: 1; }
+.log-hash { font-family: var(--mono); font-size: 8px; color: var(--ink4); white-space: nowrap; padding-top: 3px; }
+
+/* ── ALERT CARDS ── */
+.alert-box {
+  margin: 12px 20px;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+}
+.alert-box::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+}
+.alert-box.crit { border-color: rgba(192,57,43,0.25); background: rgba(192,57,43,0.04); }
+.alert-box.crit::before { background: var(--red); }
+.alert-box.warn { border-color: rgba(183,119,13,0.2); background: rgba(183,119,13,0.04); }
+.alert-box.warn::before { background: var(--amber); }
+.alert-box.ok { border-color: rgba(0,107,94,0.2); background: rgba(0,107,94,0.04); }
+.alert-box.ok::before { background: var(--teal); }
+.alert-head { font-family: var(--sans); font-size: 11px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.alert-body { font-family: var(--serif); font-size: 11px; color: var(--ink3); line-height: 1.4; }
+.alert-action {
+  margin-top: 8px;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid var(--et-orange);
+  background: none;
+  border-radius: 2px;
+  font-family: var(--mono); font-size: 9px;
+  color: var(--et-orange);
+  cursor: pointer;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+}
+.alert-action:hover { background: var(--et-orange); color: white; }
+.alert-action.healing { color: var(--amber); border-color: var(--amber); }
+.alert-action.healed { color: var(--teal); border-color: var(--teal); background: rgba(0,107,94,0.06); }
+
+/* ── RIGHT COLUMN ── */
+.right-col { background: var(--paper); }
+
+/* BREAKING BAND */
+.breaking-band {
+  background: var(--et-orange);
+  color: white;
+  padding: 6px 16px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.breaking-band .dot { width: 6px; height: 6px; border-radius: 50%; background: white; animation: blink 0.8s infinite; }
+
+/* AGENT ROSTER */
+.roster-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--rule2);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.roster-item:hover { background: var(--bg2); }
+.roster-avatar {
+  width: 36px; height: 36px; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  border: 1px solid var(--rule);
+  background: var(--bg2);
+}
+.roster-info { flex: 1; min-width: 0; }
+.roster-name { font-family: var(--sans); font-size: 11px; font-weight: 600; color: var(--ink); }
+.roster-role { font-family: var(--serif); font-size: 10px; color: var(--ink3); font-style: italic; margin-bottom: 3px; }
+.roster-stat {
+  display: flex; align-items: center; gap: 6px;
+}
+.roster-bar { flex: 1; height: 2px; background: var(--rule2); border-radius: 1px; overflow: hidden; }
+.roster-bar-fill { height: 100%; border-radius: 1px; }
+
+/* SLA PANEL */
+.sla-row {
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--rule2);
+}
+.sla-row-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.sla-name { font-family: var(--sans); font-size: 10px; font-weight: 500; color: var(--ink2); }
+.sla-pct { font-family: var(--mono); font-size: 10px; }
+
+/* TIMELINE */
+.tl-wrap { padding: 12px 16px; }
+.tl-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+  position: relative;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: 9px; top: 16px;
+  width: 1px; bottom: -10px;
+  background: var(--rule2);
+}
+.tl-item:last-child::before { display: none; }
+.tl-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid var(--rule);
+  background: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 8px;
+}
+.tl-dot.done { border-color: var(--teal); background: var(--teal); color: white; }
+.tl-dot.active { border-color: var(--et-orange); animation: pulse-ring 1.5s infinite; }
+.tl-dot.err { border-color: var(--red); background: var(--red); color: white; }
+@keyframes pulse-ring {
+  0%,100%{box-shadow:0 0 0 0 rgba(232,82,10,0.3)}
+  50%{box-shadow:0 0 0 5px rgba(232,82,10,0)}
+}
+.tl-content { flex: 1; }
+.tl-step { font-family: var(--sans); font-size: 11px; font-weight: 500; color: var(--ink); }
+.tl-step.pending { color: var(--ink4); }
+.tl-time { font-family: var(--mono); font-size: 9px; color: var(--ink4); }
+
+/* MINI SPARKLINE */
+.spark-grid { display: flex; gap: 2px; align-items: flex-end; height: 36px; }
+.s-bar { flex: 1; border-radius: 1px 1px 0 0; min-width: 5px; cursor: pointer; transition: opacity 0.2s; }
+.s-bar:hover { opacity: 0.7; }
+
+/* SCROLLBARS */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+
+/* SIMULATION PANEL */
+.sim-panel {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  margin: 12px 20px;
+  background: var(--paper);
+  overflow: hidden;
+}
+.sim-head {
+  background: var(--ink);
+  color: white;
+  padding: 8px 14px;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sim-body { padding: 12px 14px; }
+.sim-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.sim-label { font-family: var(--sans); font-size: 10px; color: var(--ink3); min-width: 110px; }
+.sim-input {
+  flex: 1;
+  appearance: none;
+  height: 3px;
+  background: var(--rule2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.sim-input::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--et-orange);
+  cursor: pointer;
+}
+.sim-val { font-family: var(--mono); font-size: 10px; color: var(--ink); min-width: 36px; text-align: right; }
+.sim-result {
+  background: var(--bg2);
+  border: 1px solid var(--rule2);
+  border-radius: 2px;
+  padding: 8px 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink2);
+  line-height: 1.7;
+  margin-top: 4px;
+}
+.sim-result .good { color: var(--teal); }
+.sim-result .warn { color: var(--amber); }
+.sim-result .bad { color: var(--red); }
+
+/* MODAL */
+.modal-wrap {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(26,15,0,0.6);
+  backdrop-filter: blur(3px);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-wrap.open { display: flex; }
+.modal-box {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--et-orange);
+  width: 560px;
+  max-height: 82vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(26,15,0,0.3);
+}
+.modal-mast {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.modal-title { font-family: var(--display); font-size: 20px; font-weight: 800; color: var(--ink); }
+.modal-sub { font-family: var(--serif); font-size: 11px; color: var(--ink3); font-style: italic; margin-top: 2px; }
+.modal-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg2); border: 1px solid var(--rule);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--ink3); flex-shrink: 0;
+  transition: all 0.15s;
+}
+.modal-close:hover { background: var(--et-orange); color: white; border-color: var(--et-orange); }
+.modal-body { padding: 16px 20px; }
+
+/* AGENT DETAIL MODAL */
+.agent-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.ad-cell {
+  background: var(--bg2);
+  border: 1px solid var(--rule2);
+  border-radius: 2px;
+  padding: 10px 12px;
+}
+.ad-label { font-family: var(--mono); font-size: 9px; color: var(--ink4); text-transform: uppercase; margin-bottom: 3px; letter-spacing: 0.5px; }
+.ad-val { font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--ink); }
+.ad-sub { font-size: 10px; color: var(--ink3); font-family: var(--serif); }
+
+/* DECISION FLOW DIAGRAM */
+.decision-flow { padding: 12px 0; }
+.df-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--rule2);
+}
+.df-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--et-orange);
+  color: white;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.df-text { font-family: var(--serif); font-size: 11px; color: var(--ink2); flex: 1; }
+.df-outcome { font-family: var(--mono); font-size: 9px; padding: 2px 6px; border-radius: 2px; }
+.df-outcome.pass { background: rgba(0,107,94,0.1); color: var(--teal); }
+.df-outcome.fail { background: rgba(192,57,43,0.08); color: var(--red); }
+.df-outcome.pending { background: var(--bg3); color: var(--ink4); }
+
+/* BREAKPOINT BANNER */
+.scroll-ticker {
+  background: var(--et-dark);
+  padding: 5px 20px;
+  overflow: hidden;
+  position: relative;
+}
+.scroll-ticker-inner {
+  display: flex;
+  gap: 40px;
+  animation: ticker 35s linear infinite;
+  white-space: nowrap;
+}
+.sti {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #F5D5B5;
+  display: flex; gap: 10px;
+}
+.sti strong { color: var(--et-orange2); }
+
+/* FOOTNOTE */
+.footnote {
+  background: var(--et-dark);
+  color: #8a6a40;
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 6px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ANOMALY FLASH */
+@keyframes flash-bg {
+  0%,100%{background:rgba(192,57,43,0)} 50%{background:rgba(192,57,43,0.08)}
+}
+.flash { animation: flash-bg 2s ease-in-out 3; }
+
+/* ET RULE */
+.et-rule { height: 2px; background: linear-gradient(90deg, var(--et-orange), var(--et-orange2), transparent); margin: 0 20px 12px; }
+
+/* INTERACTIVE CONTROLS */
+.control-panel {
+  padding: 10px 20px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ctrl-btn {
+  padding: 5px 12px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.ctrl-btn:hover { border-color: var(--et-orange); color: var(--et-orange); }
+.ctrl-btn.danger { border-color: rgba(192,57,43,0.3); color: var(--red); }
+.ctrl-btn.danger:hover { background: var(--red); color: white; border-color: var(--red); }
+.ctrl-btn.success { border-color: rgba(0,107,94,0.3); color: var(--teal); }
+.ctrl-btn.success:hover { background: var(--teal); color: white; border-color: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- ── MASTHEAD ── -->
+<div class="masthead">
+  <div class="masthead-top">
+    <div class="masthead-brand">
+      <div>
+        <div class="et-logo">ET <span>Intelligence</span></div>
+        <div class="masthead-tagline">Agentic Enterprise<br>Workflow Platform</div>
+      </div>
+    </div>
+    <div class="masthead-ticker">
+      <div class="ticker-label">LIVE</div>
+      <div class="ticker-track">
+        <div class="ticker-inner" id="tickerInner">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </div>
+    <div class="masthead-date">
+      <div class="date-text" id="dateText">—</div>
+      <div class="live-badge"><div class="live-dot"></div><span id="clockText">—</span></div>
+    </div>
+  </div>
+  <nav class="navbar">
+    <div class="nav-link active" onclick="setView('orchestrator',this)">Orchestrator</div>
+    <div class="nav-link" onclick="setView('p2p',this)">Procure-to-Pay <span class="nav-alert">2</span></div>
+    <div class="nav-link" onclick="setView('onboarding',this)">Onboarding</div>
+    <div class="nav-link" onclick="setView('contracts',this)">Contracts <span class="nav-alert">1</span></div>
+    <div class="nav-link" onclick="setView('meetings',this)">Meeting Intel <span class="nav-alert" style="background:var(--teal)">●</span></div>
+    <div class="nav-link" onclick="openModal('auditModal')">Audit Trail</div>
+    <div class="nav-link" onclick="openModal('healthModal')">Health Monitor</div>
+  </nav>
+</div>
+
+<!-- ── SCROLL TICKER ── -->
+<div class="scroll-ticker">
+  <div class="scroll-ticker-inner" id="scrollTicker">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- ── MAIN GRID ── -->
+<div class="main-grid">
+
+  <!-- LEFT: CONTENT -->
+  <div class="content-area">
+
+    <!-- METRICS STRIP -->
+    <div class="metrics-strip">
+      <div class="metric-cell orange" onclick="openModal('autonomyModal')">
+        <div class="m-label">Active Workflows</div>
+        <div class="m-value" id="mWF">47</div>
+        <div class="m-sub">across 3 processes <span class="m-delta up">↑12</span></div>
+      </div>
+      <div class="metric-cell teal" onclick="openModal('autonomyModal')">
+        <div class="m-label">Autonomy Rate</div>
+        <div class="m-value">94<span style="font-size:14px;font-family:var(--sans)">%</span></div>
+        <div class="m-sub">steps without human <span class="m-delta up">↑2.4%</span></div>
+      </div>
+      <div class="metric-cell amber" onclick="openModal('healthModal')">
+        <div class="m-label">Auto-Recoveries</div>
+        <div class="m-value" id="mRec">23</div>
+        <div class="m-sub">errors self-healed today <span class="m-delta up">↑8</span></div>
+      </div>
+      <div class="metric-cell green" onclick="openModal('auditModal')">
+        <div class="m-label">Decisions Logged</div>
+        <div class="m-value" id="mDec">1,847</div>
+        <div class="m-sub">auditable decisions <span class="m-delta dn">2 escalated</span></div>
+      </div>
+    </div>
+
+    <!-- PROCESS SELECTOR -->
+    <div class="process-bar">
+      <span class="process-label">Active Process:</span>
+      <button class="proc-btn active" onclick="selectProc(this,'p2p')">Procure-to-Pay <span class="proc-badge">●</span></button>
+      <button class="proc-btn" onclick="selectProc(this,'onboarding')">Employee Onboarding</button>
+      <button class="proc-btn" onclick="selectProc(this,'contracts')">Contract Lifecycle <span class="proc-badge" style="background:rgba(192,57,43,0.2);color:var(--red)">!</span></button>
+      <button class="proc-btn" onclick="selectProc(this,'meetings')">Meeting Intelligence</button>
+    </div>
+
+    <!-- AGENT PIPELINE -->
+    <div class="pipeline-section">
+      <div class="pipeline-header">
+        <div>
+          <div class="pipeline-title" id="pipelineTitle">Multi-Agent Pipeline — Procure-to-Pay</div>
+          <div class="pipeline-meta" id="pipelineMeta">PO-2024-0847 · Apex Supplies Ltd · ₹40,14,000 · Initiated 09:14 IST</div>
+        </div>
+        <div class="pipeline-status">
+          <div class="confidence-bar">
+            <span>Confidence</span>
+            <div class="conf-track"><div class="conf-fill" id="confFill" style="width:97%"></div></div>
+            <span id="confVal" style="color:var(--teal);font-weight:500">97.3%</span>
+          </div>
+          <div class="confidence-bar">
+            <span>ETA</span>
+            <span id="etaVal" style="color:var(--et-orange);font-weight:500">4m 11s</span>
+          </div>
+        </div>
+      </div>
+      <div class="agent-pipeline" id="agentPipeline"><!-- JS --></div>
+    </div>
+
+    <!-- CONTROL BAR -->
+    <div class="control-panel">
+      <span style="font-family:var(--sans);font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:0.8px">Simulate:</span>
+      <button class="ctrl-btn danger" onclick="injectError()">⚡ Inject Error</button>
+      <button class="ctrl-btn" onclick="runRecovery()">↺ Trigger Recovery</button>
+      <button class="ctrl-btn" onclick="escalateHuman()">👤 Escalate to Human</button>
+      <button class="ctrl-btn success" onclick="completeStep()">✓ Complete Step</button>
+      <button class="ctrl-btn" onclick="openModal('simModal')">⚙ Scenario Simulator</button>
+      <button class="ctrl-btn" onclick="openModal('decisionModal')">🧠 Decision Engine</button>
+    </div>
+
+    <!-- ALERT BOXES -->
+    <div id="alertsArea">
+      <div class="alert-box crit flash" id="alertMismatch">
+        <div class="alert-head">⚠ CRITICAL: Invoice Amount Mismatch Detected</div>
+        <div class="alert-body">Validator Agent flagged discrepancy: Invoice ₹40,60,500 vs PO ₹40,14,000 (diff: ₹46,500 / 1.16%). Recovery Agent evaluating vendor portal reconciliation strategy.</div>
+        <button class="alert-action" id="recoverBtn" onclick="triggerRecovery(this)">▶ ACTIVATE RECOVERY AGENT</button>
+      </div>
+      <div class="alert-box warn">
+        <div class="alert-head">◐ SLA DRIFT: Employee Onboarding — Sarah L.</div>
+        <div class="alert-body">IT provisioning stalled 2.1 hours beyond SLA. Orchestrator auto-rerouted to backup provisioner. Resuming in ~12 minutes.</div>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--teal);display:block;margin-top:6px">✓ AUTO-REROUTED · No human action required</span>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="section-head">
+      <div class="section-title">Workflow Intelligence</div>
+      <div class="section-rule"></div>
+      <div class="section-sub">Live · Updated every 2s</div>
+    </div>
+    <div class="tabs-bar">
+      <div class="tab-b on" onclick="switchTab(this,'tActive')">Active Tasks</div>
+      <div class="tab-b" onclick="switchTab(this,'tQueued')">Queued</div>
+      <div class="tab-b" onclick="switchTab(this,'tCompleted')">Completed</div>
+      <div class="tab-b" onclick="switchTab(this,'tDecisions')">Decision Log</div>
+    </div>
+
+    <!-- TAB: ACTIVE -->
+    <div class="tab-content on" id="tActive">
+      <table class="et-table">
+        <thead><tr>
+          <th>Task</th><th>Agent</th><th>Status</th><th>Progress</th><th>SLA</th>
+        </tr></thead>
+        <tbody id="activeTaskBody"></tbody>
+      </table>
+    </div>
+
+    <!-- TAB: QUEUED -->
+    <div class="tab-content" id="tQueued">
+      <table class="et-table">
+        <thead><tr><th>Task</th><th>Trigger Condition</th><th>Assigned Agent</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td><span class="task-n">3-Way Match Audit</span></td><td style="font-family:var(--mono);font-size:9px;color:var(--ink4)">After invoice validation</td><td>Validator</td><td><span class="badge queue"><span class="badge-dot"></span>HIGH</span></td></tr>
+          <tr><td><span class="task-n">Payment Scheduling</span></td><td style="font-family:var(--mono);font-size:9px;color:var(--ink4)">Post approval chain</td><td>Executor</td><td><span class="badge queue"><span class="badge-dot"></span>MED</span></td></tr>
+          <tr><td><span class="task-n">GL Code Posting</span></td><td style="font-family:var(--mono);font-size:9px;color:var(--ink4)">On payment release</td><td>Executor</td><td><span class="badge queue"><span class="badge-dot"></span>MED</span></td></tr>
+          <tr><td><span class="task-n">Vendor Notification</span></td><td style="font-family:var(--mono);font-size:9px;color:var(--ink4)">On payment confirmed</td><td>Communicator</td><td><span class="badge queue"><span class="badge-dot"></span>LOW</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TAB: COMPLETED -->
+    <div class="tab-content" id="tCompleted">
+      <table class="et-table">
+        <thead><tr><th>Task</th><th>Agent</th><th>Duration</th><th>Decision</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td><span class="task-n">PO Document Parsing</span></td><td>Intake</td><td style="font-family:var(--mono);font-size:10px">1m 42s</td><td><span class="badge done"><span class="badge-dot"></span>AUTO</span></td><td style="font-family:var(--mono);font-size:10px;color:var(--teal)">99.4%</td></tr>
+          <tr><td><span class="task-n">Vendor Registry Check</span></td><td>Retrieval</td><td style="font-family:var(--mono);font-size:10px">0m 38s</td><td><span class="badge done"><span class="badge-dot"></span>AUTO</span></td><td style="font-family:var(--mono);font-size:10px;color:var(--teal)">99.9%</td></tr>
+          <tr><td><span class="task-n">Fraud Risk Screening</span></td><td>Validator</td><td style="font-family:var(--mono);font-size:10px">2m 11s</td><td><span class="badge done"><span class="badge-dot"></span>AUTO</span></td><td style="font-family:var(--mono);font-size:10px;color:var(--teal)">98.7%</td></tr>
+          <tr><td><span class="task-n">Budget Availability</span></td><td>Decisioner</td><td style="font-family:var(--mono);font-size:10px">0m 55s</td><td><span class="badge done"><span class="badge-dot"></span>AUTO</span></td><td style="font-family:var(--mono);font-size:10px;color:var(--teal)">97.1%</td></tr>
+          <tr><td><span class="task-n">Duplicate PO Check</span></td><td>Validator</td><td style="font-family:var(--mono);font-size:10px">0m 22s</td><td><span class="badge done"><span class="badge-dot"></span>AUTO</span></td><td style="font-family:var(--mono);font-size:10px;color:var(--teal)">100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TAB: DECISION LOG -->
+    <div class="tab-content" id="tDecisions">
+      <div class="audit-scroll" id="decisionLog"></div>
+    </div>
+
+    <!-- AUDIT LOG SECTION -->
+    <div class="section-head" style="margin-top:2px">
+      <div class="section-title">Immutable Audit Trail</div>
+      <div class="section-rule"></div>
+      <div class="section-sub">Hash-chained · Tamper-evident</div>
+    </div>
+    <div class="audit-scroll" id="mainAuditLog"></div>
+    <div style="padding:8px 18px;border-top:1px solid var(--rule2);font-family:var(--mono);font-size:9px;color:var(--ink4);display:flex;justify-content:space-between">
+      <span>Root hash: <span style="color:var(--teal)">a3f8b91c…d042</span></span>
+      <span>Chain verified ✓</span>
+      <span id="auditCount">8 entries</span>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-col">
+
+    <div class="breaking-band">
+      <div class="dot"></div>
+      Live Agent Activity
+    </div>
+
+    <!-- AGENT ROSTER -->
+    <div class="section-head" style="padding:10px 16px">
+      <div class="section-title" style="font-size:13px">Agent Roster</div>
+      <div class="section-rule"></div>
+      <div class="section-sub">7 deployed</div>
+    </div>
+    <div id="agentRoster"><!-- JS --></div>
+
+    <!-- SLA PANEL -->
+    <div class="section-head" style="padding:10px 16px;margin-top:4px">
+      <div class="section-title" style="font-size:13px">SLA Compliance</div>
+      <div class="section-rule"></div>
+    </div>
+    <div id="slaPanel"><!-- JS --></div>
+
+    <!-- TIMELINE -->
+    <div class="section-head" style="padding:10px 16px;margin-top:4px">
+      <div class="section-title" style="font-size:13px">P2P Process Timeline</div>
+      <div class="section-rule"></div>
+    </div>
+    <div class="tl-wrap" id="timelineWrap"><!-- JS --></div>
+
+    <!-- THROUGHPUT CHART -->
+    <div class="section-head" style="padding:10px 16px;margin-top:4px">
+      <div class="section-title" style="font-size:13px">Throughput — 12h</div>
+      <div class="section-rule"></div>
+    </div>
+    <div style="padding:8px 16px 12px">
+      <div class="spark-grid" id="sparkChart"></div>
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px">
+        <span>12h ago</span><span>6h ago</span><span>now</span>
+      </div>
+    </div>
+
+    <!-- SIMULATION PANEL -->
+    <div class="sim-panel">
+      <div class="sim-head">
+        Scenario Simulator
+        <span style="font-family:var(--mono);font-size:9px;font-weight:400;color:#ccc">Adjust parameters</span>
+      </div>
+      <div class="sim-body">
+        <div class="sim-row">
+          <span class="sim-label">Invoice Variance %</span>
+          <input type="range" class="sim-input" min="0" max="15" value="1.16" step="0.1" id="simVar" oninput="updateSim()">
+          <span class="sim-val" id="simVarVal">1.2%</span>
+        </div>
+        <div class="sim-row">
+          <span class="sim-label">Workflow Load</span>
+          <input type="range" class="sim-input" min="1" max="100" value="47" id="simLoad" oninput="updateSim()">
+          <span class="sim-val" id="simLoadVal">47</span>
+        </div>
+        <div class="sim-row">
+          <span class="sim-label">Error Injection %</span>
+          <input type="range" class="sim-input" min="0" max="30" value="0" id="simErr" oninput="updateSim()">
+          <span class="sim-val" id="simErrVal">0%</span>
+        </div>
+        <div class="sim-result" id="simResult">
+          <span class="good">✓ All workflows operating within SLA thresholds</span><br>
+          <span class="good">✓ No escalation predicted in next 4 hours</span><br>
+          Autonomy rate: <span class="good">94%</span> · Recovery capacity: <span class="good">100%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTNOTE -->
+<div class="footnote">
+  <span>ET Enterprise Intelligence Platform v3.2 · Agentic Workflow Module</span>
+  <span>© 2024 Economic Times Digital · All agent decisions are logged and auditable</span>
+  <span id="footerClock">—</span>
+</div>
+
+<!-- ── MODALS ── -->
+
+<!-- AUDIT MODAL -->
+<div class="modal-wrap" id="auditModal" onclick="if(event.target===this)closeModal('auditModal')">
+  <div class="modal-box">
+    <div class="modal-mast">
+      <div>
+        <div class="modal-title">Full Audit Trail</div>
+        <div class="modal-sub">Cryptographically signed · Immutable · All agent decisions since workflow inception</div>
+      </div>
+      <div class="modal-close" onclick="closeModal('auditModal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div id="fullAuditLog"></div>
+      <div style="margin-top:10px;padding:8px 12px;background:var(--bg2);border-radius:2px;font-family:var(--mono);font-size:10px;color:var(--ink3)">
+        Block hash chain verified · Last sealed: <span style="color:var(--teal)" id="sealTime">—</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEALTH MODAL -->
+<div class="modal-wrap" id="healthModal" onclick="if(event.target===this)closeModal('healthModal')">
+  <div class="modal-box">
+    <div class="modal-mast">
+      <div>
+        <div class="modal-title">System Health Monitor</div>
+        <div class="modal-sub">Real-time agent performance · SLA breach prediction · Recovery metrics</div>
+      </div>
+      <div class="modal-close" onclick="closeModal('healthModal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="agent-detail-grid">
+        <div class="ad-cell"><div class="ad-label">Avg Decision Time</div><div class="ad-val" style="color:var(--teal)">1.4s</div><div class="ad-sub">Target &lt;3s · 53% under budget</div></div>
+        <div class="ad-cell"><div class="ad-label">SLA Breach Risk</div><div class="ad-val" style="color:var(--amber)">LOW</div><div class="ad-sub">0 breaches predicted 24h</div></div>
+        <div class="ad-cell"><div class="ad-label">Recovery Success</div><div class="ad-val" style="color:var(--teal)">100%</div><div class="ad-sub">23/23 errors self-healed</div></div>
+        <div class="ad-cell"><div class="ad-label">Human Escalations</div><div class="ad-val">2</div><div class="ad-sub">of 1,847 total decisions</div></div>
+        <div class="ad-cell"><div class="ad-label">Throughput</div><div class="ad-val">51</div><div class="ad-sub">Workflows/hour · Peak load</div></div>
+        <div class="ad-cell"><div class="ad-label">Queue Depth</div><div class="ad-val" style="color:var(--teal)">12</div><div class="ad-sub">Normal · Capacity: 200</div></div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rule2);border-radius:2px;padding:12px;font-family:var(--mono);font-size:10px;line-height:1.8;color:var(--ink3)">
+        <span style="color:var(--teal)">✓</span> All 7 agents operational<br>
+        <span style="color:var(--teal)">✓</span> Message bus latency: 12ms (normal)<br>
+        <span style="color:var(--teal)">✓</span> State store replication: OK · 3 replicas<br>
+        <span style="color:var(--amber)">◐</span> Onboarding Agent SLA: 84.5% (drift, rerouting in progress)<br>
+        <span style="color:var(--teal)">✓</span> Audit chain integrity: VERIFIED · No tampering detected<br>
+        <span style="color:var(--teal)">✓</span> Fraud screening: All passes within 3s threshold<br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DECISION ENGINE MODAL -->
+<div class="modal-wrap" id="decisionModal" onclick="if(event.target===this)closeModal('decisionModal')">
+  <div class="modal-box">
+    <div class="modal-mast">
+      <div>
+        <div class="modal-title">Decision Engine — Live Trace</div>
+        <div class="modal-sub">How agents make autonomous decisions · Policy rules · Confidence scoring</div>
+      </div>
+      <div class="modal-close" onclick="closeModal('decisionModal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div style="font-family:var(--sans);font-size:11px;font-weight:600;color:var(--ink);margin-bottom:8px">Current Decision: Invoice Validation — PO-2024-0847</div>
+      <div class="decision-flow">
+        <div class="df-step"><div class="df-num">1</div><div class="df-text">Document parsed by Intake Agent. GSTIN verified against vendor registry. Confidence: 99.4%</div><div class="df-outcome pass">PASS</div></div>
+        <div class="df-step"><div class="df-num">2</div><div class="df-text">Fraud score computed: 0.02 (threshold: 0.15). No blacklist matches. Policy FRAUD-001 cleared.</div><div class="df-outcome pass">PASS</div></div>
+        <div class="df-step"><div class="df-num">3</div><div class="df-text">Budget check: Q4 remaining ₹1.79Cr. PO amount ₹40.14L = 22.4% of remaining budget. Within 85% cap.</div><div class="df-outcome pass">PASS</div></div>
+        <div class="df-step"><div class="df-num">4</div><div class="df-text">3-way match: Invoice total ₹40,60,500 vs PO ₹40,14,000. Delta ₹46,500 exceeds 0.5% tolerance. Recovery triggered.</div><div class="df-outcome fail">REVIEW</div></div>
+        <div class="df-step"><div class="df-num">5</div><div class="df-text">Approval routing: CFO approval required for amounts &gt;₹25L. Auto-routed to CFO inbox. Awaiting.</div><div class="df-outcome pending">PENDING</div></div>
+        <div class="df-step"><div class="df-num">6</div><div class="df-text">Payment execution: Will trigger SAP F-53 transaction on approval. NEFT batch window: 14:00 IST.</div><div class="df-outcome pending">QUEUED</div></div>
+      </div>
+      <div style="margin-top:8px;padding:8px 10px;background:var(--bg2);border-radius:2px;font-family:var(--mono);font-size:9px;color:var(--ink4)">
+        Policy set: PROCUREMENT-v3.2 · Rule engine: Drools 8.1 · Audit ref: TXN-a9f3-4821
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCENARIO SIMULATOR MODAL -->
+<div class="modal-wrap" id="simModal" onclick="if(event.target===this)closeModal('simModal')">
+  <div class="modal-box">
+    <div class="modal-mast">
+      <div>
+        <div class="modal-title">Scenario Simulator</div>
+        <div class="modal-sub">Model workflow stress scenarios · Predict SLA outcomes · Test recovery paths</div>
+      </div>
+      <div class="modal-close" onclick="closeModal('simModal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;gap:10px;margin-bottom:12px">
+        <div class="sim-row"><span class="sim-label">Invoice Variance %</span><input type="range" class="sim-input" min="0" max="20" value="1.2" step="0.1" id="simVar2" oninput="updateSim2()"><span class="sim-val" id="sv2">1.2%</span></div>
+        <div class="sim-row"><span class="sim-label">Workflow Concurrency</span><input type="range" class="sim-input" min="1" max="200" value="47" id="simLoad2" oninput="updateSim2()"><span class="sim-val" id="sl2">47</span></div>
+        <div class="sim-row"><span class="sim-label">Error Rate %</span><input type="range" class="sim-input" min="0" max="30" value="0" id="simErr2" oninput="updateSim2()"><span class="sim-val" id="se2">0%</span></div>
+        <div class="sim-row"><span class="sim-label">Agent Speed</span><input type="range" class="sim-input" min="50" max="200" value="100" id="simSpeed" oninput="updateSim2()"><span class="sim-val" id="ss2">1×</span></div>
+      </div>
+      <div class="sim-result" id="simResult2" style="font-size:11px;line-height:1.9">
+        <span class="good">✓ System stable · No SLA breaches predicted</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTONOMY MODAL -->
+<div class="modal-wrap" id="autonomyModal" onclick="if(event.target===this)closeModal('autonomyModal')">
+  <div class="modal-box">
+    <div class="modal-mast">
+      <div>
+        <div class="modal-title">Autonomy Breakdown</div>
+        <div class="modal-sub">How many workflow steps complete without human involvement</div>
+      </div>
+      <div class="modal-close" onclick="closeModal('autonomyModal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="agent-detail-grid">
+        <div class="ad-cell"><div class="ad-label">Procure-to-Pay</div><div class="ad-val" style="color:var(--teal)">97%</div><div class="ad-sub">29/30 steps fully autonomous</div></div>
+        <div class="ad-cell"><div class="ad-label">Employee Onboarding</div><div class="ad-val" style="color:var(--amber)">89%</div><div class="ad-sub">16/18 steps — IT step flagged</div></div>
+        <div class="ad-cell"><div class="ad-label">Contract Lifecycle</div><div class="ad-val" style="color:var(--teal)">95%</div><div class="ad-sub">19/20 steps — legal review pending</div></div>
+        <div class="ad-cell"><div class="ad-label">Meeting Intelligence</div><div class="ad-val" style="color:var(--teal)">100%</div><div class="ad-sub">Fully autonomous end-to-end</div></div>
+      </div>
+      <div style="font-family:var(--serif);font-size:12px;color:var(--ink3);line-height:1.7;border-top:1px solid var(--rule2);padding-top:10px">
+        Across all 47 active workflows, agents have completed <strong>1,733 of 1,847 decision points</strong> without any human intervention. Only 2 decisions were escalated — both requiring legal sign-off on contract amendments exceeding ₹2Cr.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const tickerData = [
+  {label:'WF-ACTIVE', val:'47', dir:'up'},
+  {label:'AUTO-RATE', val:'94.2%', dir:'up'},
+  {label:'P2P-SLA', val:'98.2%', dir:'up'},
+  {label:'RECOVER', val:'23/23', dir:'up'},
+  {label:'ESCALATIONS', val:'2', dir:'dn'},
+  {label:'QUEUE-DEPTH', val:'12', dir:'up'},
+  {label:'AVG-DECISION', val:'1.4s', dir:'up'},
+  {label:'ONBOARD-SLA', val:'84.5%', dir:'dn'},
+  {label:'CONTRACT-SLA', val:'96.1%', dir:'up'},
+  {label:'FRAUD-FLAGS', val:'0', dir:'up'},
+  {label:'DECISIONS/HR', val:'218', dir:'up'},
+];
+
+const scrollTickerData = [
+  'P2P: PO-2024-0847 validation in progress — Apex Supplies Ltd · ₹40.14L',
+  'RECOVERY: Invoice mismatch ₹46,500 → Vendor reconciliation activated',
+  'ONBOARDING: Sarah L. IT provision rerouted → backup provisioner assigned',
+  'CONTRACTS: MSA-2024-112 renewal clauses under AI legal review',
+  'MEETING INTEL: Q4 Planning call → 14 action items extracted, 6 owners assigned',
+  'SLA ALERT: Onboarding drift 2.1h — auto-corrected without escalation',
+  'AUTONOMY: 1,733/1,847 decisions made without human involvement today',
+];
+
+const agentDefs = [
+  {id:'intake', label:'Intake', role:'Doc Parser', emoji:'📥', status:'done', pct:100},
+  {id:'retrieval', label:'Retrieval', role:'Data Fetch', emoji:'🔍', status:'done', pct:100},
+  {id:'validator', label:'Validator', role:'3-Way Match', emoji:'⚖️', status:'active', pct:67},
+  {id:'recovery', label:'Recovery', role:'Error Heal', emoji:'🔧', status:'active', pct:45},
+  {id:'decisioner', label:'Decisioner', role:'Rule Engine', emoji:'🧠', status:'idle', pct:0},
+  {id:'executor', label:'Executor', role:'ERP Writer', emoji:'⚡', status:'idle', pct:0},
+  {id:'verifier', label:'Verifier', role:'Audit Seal', emoji:'🔐', status:'idle', pct:0},
+];
+
+const rosterDefs = [
+  ...agentDefs,
+  {id:'monitor', label:'Monitor', role:'SLA Watchdog', emoji:'📡', status:'active', pct:100},
+];
+
+const auditData = [
+  {time:'09:31:42', type:'ERROR',    msg:'Invoice total mismatch: ₹40,60,500 vs ₹40,14,000. Δ ₹46,500 (1.16%). Threshold: 0.5%.', hash:'#a3f8'},
+  {time:'09:31:43', type:'RECOVERY', msg:'Recovery Agent spawned (corr: rec-0291). Strategy: vendor portal API reconciliation.', hash:'#b19c'},
+  {time:'09:28:11', type:'DECISION', msg:'Budget check PASSED. Q4 remaining: ₹1.79Cr. PO: ₹40.14L (22.4%). Cap: 85% — OK.', hash:'#c7e2'},
+  {time:'09:25:33', type:'ACTION',   msg:'Validator fetched 22 line items from PO-2024-0847 via SAP BAPI_PO_GETDETAIL.', hash:'#d041'},
+  {time:'09:22:47', type:'DECISION', msg:'Fraud score: 0.02 (threshold 0.15). No blacklist match. Policy FRAUD-001 → CLEARED.', hash:'#e5f3'},
+  {time:'09:19:04', type:'ACTION',   msg:'Retrieval Agent: Apex Supplies Ltd GSTIN verified · Credit score: AA · Payment history: Clean.', hash:'#f8a1'},
+  {time:'09:16:32', type:'DECISION', msg:'Intake Agent classified document as INVOICE. Confidence: 99.4%. Routing to Validator.', hash:'#g2b8'},
+  {time:'09:14:00', type:'ACTION',   msg:'Workflow PO-2024-0847 initiated. Trigger: SAP S/4 event bus. Orchestrator plan: P2P-v3.2 (8 steps).', hash:'#h9c0'},
+];
+
+const taskData = [
+  {name:'Invoice Line Validation', agent:'Validator', status:'running', pct:67, sla:'On track'},
+  {name:'Amount Reconciliation', agent:'Recovery', status:'running', pct:45, sla:'Breached'},
+  {name:'CFO Approval Routing', agent:'Decisioner', status:'running', pct:22, sla:'On track'},
+  {name:'SLA Watchdog', agent:'Monitor', status:'running', pct:100, sla:'On track'},
+];
+
+const timelineSteps = [
+  {label:'PO Ingested from SAP', time:'09:14', done:true},
+  {label:'Vendor Verified', time:'09:16', done:true},
+  {label:'Fraud Screened', time:'09:19', done:true},
+  {label:'Budget Approved', time:'09:21', done:true},
+  {label:'Invoice Matching', time:'09:25', active:true},
+  {label:'Recovery Running', time:'09:31', active:true, err:false},
+  {label:'Approval Decision', time:'Pending', done:false},
+  {label:'Payment Execution', time:'Pending', done:false},
+  {label:'Audit Sealed', time:'Pending', done:false},
+];
+
+const slaData = [
+  {name:'Procure-to-Pay', pct:98.2, color:'var(--teal)'},
+  {name:'Employee Onboarding', pct:84.5, color:'var(--amber)'},
+  {name:'Contract Lifecycle', pct:96.1, color:'var(--teal)'},
+  {name:'Meeting Intelligence', pct:100, color:'var(--green)'},
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+
+function renderTicker() {
+  const items = [...tickerData,...tickerData].map(t =>
+    `<div class="ticker-item"><span style="color:var(--et-orange);font-size:9px;letter-spacing:0.5px">${t.label}</span> <span class="${t.dir}">${t.val} ${t.dir==='up'?'▲':'▼'}</span></div>`
+  ).join('');
+  document.getElementById('tickerInner').innerHTML = items + items;
+}
+
+function renderScrollTicker() {
+  const txt = [...scrollTickerData,...scrollTickerData].map(s =>
+    `<span class="sti"><strong>ALERT</strong> ${s}</span>`
+  ).join('');
+  document.getElementById('scrollTicker').innerHTML = txt + txt;
+}
+
+function renderPipeline() {
+  const el = document.getElementById('agentPipeline');
+  el.innerHTML = '';
+  agentDefs.forEach((a, i) => {
+    const statusClass = {done:'done-node', active:'active-node', idle:'idle-node', error:'error-node'}[a.status];
+    const statusColor = {done:'color:var(--teal)', active:'color:var(--et-orange)', idle:'color:var(--ink4)', error:'color:var(--red)'}[a.status];
+    const statusLabel = {done:'DONE', active:'RUNNING', idle:'WAITING', error:'ERROR'}[a.status];
+    const node = document.createElement('div');
+    node.className = 'a-node';
+    node.onclick = () => showAgentDetail(a);
+    node.innerHTML = `
+      <div class="a-box ${statusClass}">
+        ${a.status==='active'?'<div class="a-spinner"></div>':''}
+        ${a.emoji}
+      </div>
+      <div class="a-label">${a.label}</div>
+      <div class="a-sublabel">${a.role}</div>
+      <div class="a-status-tag" style="${statusColor}">${statusLabel}</div>
+    `;
+    el.appendChild(node);
+    if (i < agentDefs.length - 1) {
+      const connClass = a.status === 'done' ? 'done-conn' : a.status === 'active' ? 'active-conn' : '';
+      const arrClass = a.status === 'done' ? 'done-arr' : a.status === 'active' ? 'active-arr' : '';
+      const conn = document.createElement('div');
+      conn.className = 'a-conn';
+      conn.innerHTML = `<div class="a-conn-line ${connClass}">${a.status==='active'?'<div class="packet"></div>':''}</div><div class="a-conn-arrow ${arrClass}"></div>`;
+      el.appendChild(conn);
+    }
+  });
+}
+
+function renderRoster() {
+  document.getElementById('agentRoster').innerHTML = rosterDefs.map(a => {
+    const sc = {done:'var(--teal)',active:'var(--et-orange)',idle:'var(--ink4)',error:'var(--red)'}[a.status];
+    const sl = {done:'✓ DONE',active:'● ACTIVE',idle:'○ IDLE',error:'✕ ERROR'}[a.status];
+    return `<div class="roster-item" onclick="showAgentDetail(${JSON.stringify(a).replace(/"/g,"'")})">
+      <div class="roster-avatar">${a.emoji}</div>
+      <div class="roster-info">
+        <div class="roster-name">${a.label} Agent</div>
+        <div class="roster-role">${a.role}</div>
+        <div class="roster-stat">
+          <div class="roster-bar"><div class="roster-bar-fill" style="width:${a.pct}%;background:${sc}"></div></div>
+          <span style="font-family:var(--mono);font-size:9px;color:${sc};min-width:52px">${sl}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderSLA() {
+  document.getElementById('slaPanel').innerHTML = slaData.map(s => `
+    <div class="sla-row">
+      <div class="sla-row-head">
+        <span class="sla-name">${s.name}</span>
+        <span class="sla-pct" style="color:${s.color};font-weight:500">${s.pct}%</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-fill" style="width:${s.pct}%;background:${s.color}"></div></div>
+    </div>
+  `).join('');
+}
+
+function renderTimeline() {
+  document.getElementById('timelineWrap').innerHTML = timelineSteps.map(s => {
+    const cls = s.active ? 'active' : s.done ? 'done' : '';
+    const icon = s.done ? '✓' : s.active ? '●' : '';
+    return `<div class="tl-item">
+      <div class="tl-dot ${cls}">${icon}</div>
+      <div class="tl-content">
+        <div class="tl-step ${!s.done && !s.active ? 'pending' : ''}">${s.label}</div>
+        <div class="tl-time">${s.time}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderAudit(entries, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = entries.map(e => `
+    <div class="log-row" onclick="highlightEntry(this)">
+      <div class="log-time">${e.time}</div>
+      <div class="log-type ${e.type}">${e.type}</div>
+      <div class="log-msg">${e.msg}</div>
+      <div class="log-hash">${e.hash||''}</div>
+    </div>
+  `).join('');
+}
+
+function renderDecisionLog() {
+  renderAudit(auditData.filter(e => e.type === 'DECISION' || e.type === 'RECOVERY'), 'decisionLog');
+}
+
+function renderTasks() {
+  document.getElementById('activeTaskBody').innerHTML = taskData.map(t => {
+    const statusBadge = {running:`<span class="badge running"><span class="badge-dot"></span>RUNNING</span>`, error:`<span class="badge err"><span class="badge-dot"></span>ERROR</span>`}[t.status];
+    const slaColor = t.sla === 'Breached' ? 'color:var(--red);font-weight:500' : 'color:var(--teal)';
+    return `<tr>
+      <td><span class="task-n">${t.name}</span></td>
+      <td style="font-family:var(--sans);font-size:11px">${t.agent}</td>
+      <td>${statusBadge}</td>
+      <td>
+        <div class="prog-wrap"><div class="prog-fill" style="width:${t.pct}%;background:${t.sla==='Breached'?'var(--red)':'var(--et-orange)'}"></div></div>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--ink4)">${t.pct}%</span>
+      </td>
+      <td style="font-family:var(--mono);font-size:9px;${slaColor}">${t.sla}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderSparkline() {
+  const data = [12,18,9,22,30,28,35,42,38,47,43,51];
+  const max = Math.max(...data);
+  document.getElementById('sparkChart').innerHTML = data.map((v,i) => {
+    const h = (v/max*100).toFixed(0);
+    const recent = i > 8;
+    return `<div class="s-bar" style="height:${h}%;background:${recent?'var(--et-orange)':'var(--rule)'}"></div>`;
+  }).join('');
+}
+
+// ── INTERACTIONS ──────────────────────────────────────────────────────────────
+
+function highlightEntry(el) {
+  el.style.background = 'rgba(232,82,10,0.06)';
+  setTimeout(() => el.style.background = '', 600);
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  if (id === 'auditModal') {
+    renderAudit(auditData, 'fullAuditLog');
+    document.getElementById('sealTime').textContent = new Date().toLocaleTimeString('en-IN');
+  }
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function switchTab(btn, paneId) {
+  btn.closest('.tabs-bar').querySelectorAll('.tab-b').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.tab-content').forEach(p => p.classList.remove('on'));
+  document.getElementById(paneId).classList.add('on');
+}
+
+function selectProc(btn, id) {
+  document.querySelectorAll('.proc-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const titles = {
+    p2p: ['Multi-Agent Pipeline — Procure-to-Pay','PO-2024-0847 · Apex Supplies Ltd · ₹40,14,000 · Initiated 09:14 IST'],
+    onboarding: ['Multi-Agent Pipeline — Employee Onboarding','EMP-2024-1142 · Sarah L. · IT + Finance provisioning · Step 3/7'],
+    contracts: ['Multi-Agent Pipeline — Contract Lifecycle','MSA-2024-112 · TechVision Ltd · Renewal review · Clause analysis'],
+    meetings: ['Multi-Agent Pipeline — Meeting Intelligence','MEET-2024-0328 · Q4 Planning · 14 action items extracted · 100% autonomous'],
+  };
+  document.getElementById('pipelineTitle').textContent = titles[id][0];
+  document.getElementById('pipelineMeta').textContent = titles[id][1];
+}
+
+function setView(v, el) {
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── SIMULATION CONTROLS ───────────────────────────────────────────────────────
+
+let recoveryRunning = false;
+function triggerRecovery(btn) {
+  if (recoveryRunning) return;
+  recoveryRunning = true;
+  btn.className = 'alert-action healing';
+  btn.textContent = '⟳ RECOVERY AGENT RUNNING...';
+  addAuditEntry({time:nowTime(), type:'RECOVERY', msg:'Recovery Agent initiated vendor portal API call. Awaiting confirmation of correct invoice amount.', hash:'#r'+Math.random().toString(36).slice(2,6)});
+  setTimeout(() => {
+    btn.className = 'alert-action healed';
+    btn.textContent = '✓ RECONCILED — ₹40,14,000 CONFIRMED';
+    document.querySelector('#alertMismatch .alert-head').textContent = '✓ RESOLVED: Invoice Reconciled Autonomously';
+    document.querySelector('#alertMismatch').className = 'alert-box ok';
+    addAuditEntry({time:nowTime(), type:'RECOVERY', msg:'SUCCESS: Vendor confirmed ₹40,14,000 as correct amount. Invoice corrected. Workflow resumed automatically.', hash:'#s'+Math.random().toString(36).slice(2,6)});
+    document.getElementById('mRec').textContent = parseInt(document.getElementById('mRec').textContent)+1;
+  }, 3000);
+}
+
+function injectError() {
+  addAuditEntry({time:nowTime(), type:'ERROR', msg:'SIMULATED: ERP connection timeout on line item fetch. Retry strategy: exponential backoff (attempt 1/3).', hash:'#e'+Math.random().toString(36).slice(2,6)});
+  const el = document.getElementById('alertsArea');
+  const div = document.createElement('div');
+  div.className = 'alert-box crit flash';
+  div.innerHTML = `<div class="alert-head">⚡ INJECTED ERROR: ERP Connection Timeout</div>
+    <div class="alert-body">Simulated SAP connection failure. Recovery Agent applying exponential backoff strategy. Attempt 1/3 in progress.</div>
+    <button class="alert-action" onclick="this.textContent='✓ Recovered — ERP reconnected';this.className='alert-action healed'">↺ WATCH RECOVERY</button>`;
+  el.prepend(div);
+  setTimeout(() => div.remove(), 8000);
+}
+
+function runRecovery() {
+  addAuditEntry({time:nowTime(), type:'RECOVERY', msg:'Manual recovery trigger: Orchestrator reinspecting all stalled tasks and applying fallback routing strategies.', hash:'#m'+Math.random().toString(36).slice(2,6)});
+}
+
+function escalateHuman() {
+  addAuditEntry({time:nowTime(), type:'ESCALATION', msg:'Manual escalation triggered. Task routed to Procurement Manager inbox. SLA paused pending human review.', hash:'#esc'+Math.random().toString(36).slice(2,4)});
+  const total = parseInt(document.getElementById('mDec').textContent.replace(',',''));
+  document.getElementById('mDec').textContent = (total+1).toLocaleString();
+}
+
+function completeStep() {
+  const step = agentDefs.find(a => a.status === 'active');
+  if (step) {
+    step.status = 'done'; step.pct = 100;
+    const next = agentDefs[agentDefs.indexOf(step)+1];
+    if (next) { next.status = 'active'; }
+    renderPipeline(); renderRoster();
+    addAuditEntry({time:nowTime(), type:'DECISION', msg:`Step COMPLETED by ${step.label} Agent. Auto-advancing to ${next?.label||'Verifier'} Agent. Confidence: 96.8%.`, hash:'#c'+Math.random().toString(36).slice(2,6)});
+  }
+}
+
+function showAgentDetail(a) {
+  openModal('healthModal');
+}
+
+function updateSim() {
+  const variance = parseFloat(document.getElementById('simVar').value);
+  const load = parseInt(document.getElementById('simLoad').value);
+  const errRate = parseInt(document.getElementById('simErr').value);
+  document.getElementById('simVarVal').textContent = variance.toFixed(1)+'%';
+  document.getElementById('simLoadVal').textContent = load;
+  document.getElementById('simErrVal').textContent = errRate+'%';
+  updateSimResult('simResult', variance, load, errRate, 100);
+}
+
+function updateSim2() {
+  const variance = parseFloat(document.getElementById('simVar2').value);
+  const load = parseInt(document.getElementById('simLoad2').value);
+  const errRate = parseInt(document.getElementById('simErr2').value);
+  const speed = parseInt(document.getElementById('simSpeed').value);
+  document.getElementById('sv2').textContent = variance.toFixed(1)+'%';
+  document.getElementById('sl2').textContent = load;
+  document.getElementById('se2').textContent = errRate+'%';
+  document.getElementById('ss2').textContent = (speed/100).toFixed(1)+'×';
+  updateSimResult('simResult2', variance, load, errRate, speed);
+}
+
+function updateSimResult(id, variance, load, errRate, speed) {
+  const el = document.getElementById(id);
+  let lines = [];
+  const autoRate = Math.max(60, 94 - errRate*1.5 - (load>150?5:0));
+  const slaOk = variance < 5 && load < 120 && errRate < 10;
+  const recoveryOk = errRate < 20;
+  lines.push(`${slaOk?'<span class="good">✓</span>':'<span class="bad">✕</span>'} SLA prediction: ${slaOk?'<span class="good">No breach</span>':'<span class="bad">Breach likely</span>'}`);
+  lines.push(`Autonomy rate: <span class="${autoRate>85?'good':autoRate>70?'warn':'bad'}">${autoRate.toFixed(1)}%</span>`);
+  if (variance >= 5) lines.push(`<span class="warn">⚠ Variance ${variance.toFixed(1)}% → Manual review required</span>`);
+  if (load > 150) lines.push(`<span class="warn">⚠ Queue saturation predicted at ${load} concurrent workflows</span>`);
+  if (errRate >= 10) lines.push(`<span class="${errRate>20?'bad':'warn'}">${errRate>20?'✕':'⚠'} Error rate ${errRate}% → ${errRate>20?'Recovery capacity exceeded':'Recovery agents under pressure'}</span>`);
+  if (errRate === 0 && load < 80 && variance < 2) lines.push(`<span class="good">✓ All workflows operating within SLA thresholds</span><br><span class="good">✓ No escalation predicted in next 4 hours</span>`);
+  el.innerHTML = lines.join('<br>');
+}
+
+// ── LIVE UPDATES ──────────────────────────────────────────────────────────────
+
+function addAuditEntry(entry) {
+  auditData.unshift(entry);
+  renderAudit(auditData, 'mainAuditLog');
+  renderDecisionLog();
+  document.getElementById('auditCount').textContent = auditData.length + ' entries';
+  const total = parseInt(document.getElementById('mDec').textContent.replace(',',''))+1;
+  document.getElementById('mDec').textContent = total.toLocaleString();
+}
+
+function nowTime() {
+  return new Date().toLocaleTimeString('en-IN',{hour12:false}).slice(0,8);
+}
+
+let tick = 0;
+setInterval(() => {
+  tick++;
+  // Confidence jitter
+  const conf = (97.3 + (Math.random()-0.5)*0.8);
+  document.getElementById('confVal').textContent = conf.toFixed(1)+'%';
+  document.getElementById('confFill').style.width = conf+'%';
+
+  // ETA countdown
+  const etaEl = document.getElementById('etaVal');
+  const parts = etaEl.textContent.replace('s','').split('m ');
+  let m = parseInt(parts[0]), s = parseInt(parts[1]);
+  if (s > 0) s--; else if (m > 0) { m--; s=59; }
+  etaEl.textContent = `${m}m ${s}s`;
+
+  // Decision counter
+  if (tick % 6 === 0) {
+    const cur = parseInt(document.getElementById('mDec').textContent.replace(',',''));
+    document.getElementById('mDec').textContent = (cur + Math.floor(Math.random()*2+1)).toLocaleString();
+  }
+
+  // Workflow count pulse
+  if (tick % 20 === 0) {
+    const wf = parseInt(document.getElementById('mWF').textContent);
+    document.getElementById('mWF').textContent = wf + (Math.random()>0.5?1:-1);
+  }
+
+}, 1000);
+
+// ── CLOCK ─────────────────────────────────────────────────────────────────────
+function tick_clock() {
+  const now = new Date();
+  const t = now.toLocaleTimeString('en-IN', {hour12:false});
+  const d = now.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+  document.getElementById('clockText').textContent = t + ' IST';
+  document.getElementById('dateText').textContent = d;
+  document.getElementById('footerClock').textContent = t + ' IST';
+}
+setInterval(tick_clock, 1000);
+tick_clock();
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderTicker();
+renderScrollTicker();
+renderPipeline();
+renderRoster();
+renderSLA();
+renderTimeline();
+renderAudit(auditData, 'mainAuditLog');
+renderDecisionLog();
+renderTasks();
+renderSparkline();
+</script>
+</body>
+</html>
